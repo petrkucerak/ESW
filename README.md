@@ -1,2 +1,3 @@
-# ESW
-Předmět  B4M36ESW - Efektivní software na ČVUT v Praze
+# Předmět  B4M36ESW - Efektivní software na ČVUT v Praze
+
+V předmětu Effektivní software se seznámíte s problematikou optimalizace softwaru a algoritmů při omezených zdrojích. Předmět se zaměřuje na efektivní využití moderních hardwarových architektur, tj. vícejádrových a víceprocesorových systémů se sdílenou pamětí. Přednášené techniky se student naučí implementovat v jazycích C a Java. Hlavní témata jsou: optimalizace kódu, efektivní datové struktury a využití cache paměti procesoru, datové struktury ve vícevláknových aplikacích, implementace výkonných síťových serverů.
