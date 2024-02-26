@@ -18,12 +18,14 @@
 #### Precomputation
 
 - example Pascal's Trinagle
+
 ![alt text](image-1.png)
 
 #### Compile-Time Initialization
 
 - store data during compilation => save work during executing time
 - *hardcore values into code or precalucle during compilation*
+
 ![alt text](image-2.png)
 
 #### Caching
