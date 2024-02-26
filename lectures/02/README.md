@@ -37,7 +37,56 @@
 
 #### Sparsity
 
-- avaid storing and computation on zeroes
+- avoid storing and computation on zeroes
 
 ![alt text](image-4.png)
 ![alt text](image-5.png)
+
+### Logic
+
+#### Constant Folding and Propagation
+
+- evaluate constant expressions and substitute the result into futher expressions, all during compilation
+
+![alt text](image-6.png)
+
+#### Common-Subexpression Elimination
+
+- aviod computatationg the same expression multiple times by evaluating the same expression multiple times by evaluating the expression once and storing the result for later use
+
+![alt text](image-7.png)
+
+#### Algebraic Indetities
+
+- to replace expensive algebraic expressions with algebraic equivalents that requiere less work
+
+![alt text](image-8.png)
+![alt text](image-9.png)
+
+#### Short-Circuiting
+
+- when perfroming a series of test, that idea of *short-circutting* is to stop evaluating as soon as you know the answare.
+
+![alt text](image-10.png)
+
+#### Ordering Tests
+
+- order test that are more often "successful" befeore tests that are rarely successful
+
+![alt text](image-11.png)
+
+#### Creating a Fast Path
+
+- first time try faster computation and only if the first type of cumputation is not success, do longer
+
+![alt text](image-12.png)
+![alt text](image-13.png)
+
+#### Combining Tests
+
+- the idea is to replace a sequence of test with one test or switch
+- *insted of sequencial, create decisions trees*
+
+![alt text](image-14.png)
+![alt text](image-15.png)
+
