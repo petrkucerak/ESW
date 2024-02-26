@@ -205,4 +205,26 @@ Static instrumentation has problems: overhead, modifies code:
 - Software can configure which events to count and when/whether to generate interrupts
 - In many cases can be accessed from application code
 
+#### Linux tool `perf`
+
+- discussed on labs
+
 ## C/C++ compiler
+
+### Compilers flags (gcc, clang)
+
+- Documentation is your friend:
+  - Command (p)info gcc
+  - https://gcc.gnu.org/onlinedocs/
+  - Clang’s flags are mostly compatible with gcc
+- Generate debugging information: -g
+  - Optimization level: `-O0`, `-O1`, `-O2`, `-O3`, `-Os (size)`, `-Og` (debugging)
+  - `-O2` is considered “safe”, `-O3` may be buggy
+  - Individual optimization passes:
+  - `-ftree-ccp`, `-fast-math`, `-fomit-frame-pointer`, `-ftree-vectorize`, ...
+  - Find out which optimizations passes are active for given optimization level: `g++ -Q -O2 --help=optimizers`
+- Code generation
+- `-fpic`, `-fpack-struct`, `-fshort-enums`
+- Machine dependent:
+  - Generate instructions for given micro-architecture: `-march=haswell`, `-march=skylake` (will not run on older hardware)
+  - Use only “older” instructions, but schedule them for for given μarch: `-mtune=haswell`, `-mtune=native`, `-m32`, `-minline-all-stringops`, ... 
