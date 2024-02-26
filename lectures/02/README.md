@@ -1,4 +1,4 @@
-# Notes
+# Lecture 02
 
 ## Betley Rules
 
@@ -90,3 +90,58 @@
 ![alt text](image-14.png)
 ![alt text](image-15.png)
 
+### Loop
+
+#### Hoisting
+
+- (loop-invariant code motion) is to avoid recomputating loop-invariant code each time through the body of a loop
+
+![alt text](image-16.png)
+
+#### Sentinels
+
+**Sentinels** are special dummy values placed in a data structer to simplify the logic of boundary conditions, and in praticular, the handling of loop-exit tests.
+
+![alt text](image-17.png)
+
+#### Loop Unrolling
+
+**Loop unrolling** attempts to save work by combining several consecutive iterations of a loop into a single iteration, thereby reducing the total number of iterations of the loop and, consequently, the number of times that the instructions that consterol the loop must be executed.
+
+**Full** loop unrolling: All iterations are unrolled.
+![alt text](image-18.png)
+
+**Parial** loop inrollign: Several, but not all, of the iterations are undolled.
+![alt text](image-19.png)
+
+
+#### Loop Fusion
+
+- also called **jamming** - is to combine multiple loops over the same index range into a single loop body, thareby saving the overhead of loop control
+
+![alt text](image-20.png)
+
+#### Eliminating Waster Iterations
+
+- idea is to modify loop bounds to avoid executing loop iterations over essentially empty loop bodies
+
+![alt text](image-21.png)
+
+### Function
+
+#### Inlining
+
+- the idea is to avoid the overhead of the function call by replacing a call to the function with the body of the function itself
+
+![alt text](image-22.png)
+
+
+#### Tail-Recursion Elimination
+
+- the idea is to replace a recursive call that occurs as the last step of a function with a branch, saving function-call overhead
+
+#### Coarsening Recursion
+
+- idea is to increase the size of the base case and handle it with more efficient code that avoids function-call overhead
+
+![alt text](image-23.png)
