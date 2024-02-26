@@ -145,3 +145,35 @@
 - idea is to increase the size of the base case and handle it with more efficient code that avoids function-call overhead
 
 ![alt text](image-23.png)
+
+
+## Profiling
+
+- identifiaction where code is slow
+
+### Bottlenecks
+
+- (application) code
+- 3rd party libraries
+- OS krenel
+- memory
+- network
+- disk
+- ...
+
+Is challenging to determing when proble is. Software is so complex.
+
+*On Linux we know a lots performance tools*
+![alt text](image-24.png)
+
+### Profiling tools
+
+| In order to do:         | You can use:                |
+| ----------------------- | --------------------------- |
+| Manual instrumentation  | `printf()` and similar      |
+| Static instrumentation  | *gprof* (GNU profiler)      |
+| Dynamic instrumentation | *callgrid*, *cachegrind*    |
+| Performace counter      | *oprofile*, *perf*          |
+| Heap profiling          | *masif*, *google-perftools* |
+
+## C/C++ compiler
