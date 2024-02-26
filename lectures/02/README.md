@@ -227,4 +227,14 @@ Static instrumentation has problems: overhead, modifies code:
 - `-fpic`, `-fpack-struct`, `-fshort-enums`
 - Machine dependent:
   - Generate instructions for given micro-architecture: `-march=haswell`, `-march=skylake` (will not run on older hardware)
-  - Use only “older” instructions, but schedule them for for given μarch: `-mtune=haswell`, `-mtune=native`, `-m32`, `-minline-all-stringops`, ... 
+  - Use only “older” instructions, but schedule them for for given μarch: `-mtune=haswell`, `-mtune=native`, `-m32`, `-minline-all-stringops`, ...
+
+### Compiler internals overview
+
+C/C++ compile typically contains the fillowing parts:
+
+- Compiler **fronteend** - coinverts source code int ointermediate represntation (IR)
+- **Sematic checks** - ensuring that the program *make sense*
+- **Optimalization** passes
+- A target-dependent **backend** - generate assbemly code or machine code
+- **Linker** - can be, and usually is, indepent of the compiler
