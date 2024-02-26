@@ -176,4 +176,33 @@ Is challenging to determing when proble is. Software is so complex.
 | Performace counter      | *oprofile*, *perf*          |
 | Heap profiling          | *masif*, *google-perftools* |
 
+#### Static instrumentation
+
+grof usage:
+
+```sh
+gcc -pg ... -o program #Adds profiling code to every function and basic block
+./program # Runs the program, it generates gmon.out file
+gprof program
+```
+
+#### Event sampling
+
+Static instrumentation has problems: overhead, modifies code:
+- Basic idea of event sampling
+  - When an interesting event occurs, look at where the program executes
+  - Result is an histogram of addresses and event counts
+- Events
+  - Time, cache miss, branch-prediction miss, page fault
+- Implementation
+  - Timer interrupt → upon ISR entry, program address is stored on stack
+  - Each event has a counting register in HW
+    - Every N (configurable) events, an interrupt is generated
+
+### Performance counter
+
+- Hardware inside the CPU (Intel, ARM, ...)
+- Software can configure which events to count and when/whether to generate interrupts
+- In many cases can be accessed from application code
+
 ## C/C++ compiler
