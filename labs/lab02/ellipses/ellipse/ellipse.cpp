@@ -45,11 +45,13 @@ Ellipse Ellipse::fit(const std::vector<Point> &p)
    Mat_<double> A(p.size(), 5);
 
    for (size_t i = 0; i < p.size(); i++) {
-      A[i][0] = p[i].x * p[i].x;
-      A[i][1] = 2 * p[i].x * p[i].y;
-      A[i][2] = p[i].y * p[i].y;
-      A[i][3] = 2 * p[i].x;
-      A[i][4] = 2 * p[i].y;
+      double x = p[i].x,
+             y = p[i].y; // Store in temporary to avoid multiple accesses
+      A[i][0] = x * x;
+      A[i][1] = 2 * x * y;
+      A[i][2] = y * y;
+      A[i][3] = 2 * x;
+      A[i][4] = 2 * y;
    }
    Mat B = -1 * Mat::ones(p.size(), 1, CV_64F);
 
