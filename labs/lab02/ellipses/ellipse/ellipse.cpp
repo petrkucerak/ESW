@@ -39,10 +39,10 @@ static double distance(const Point2d &p1, const Point2d &p2)
 
 Ellipse Ellipse::fit(const std::vector<Point> &p)
 {
-   Mat_<double> A(p.size(), 5);
-
    if (p.size() < 5)
       return Ellipse::invalid();
+
+   Mat_<double> A(p.size(), 5);
 
    for (size_t i = 0; i < p.size(); i++) {
       A[i][0] = p[i].x * p[i].x;
@@ -168,10 +168,11 @@ void Ellipse::calcWeight(const Mat1b &bw, Mat3b *dbg,
    unsigned ptsOnEllipse = 0;
    unsigned ptsInRoi = 0;
    Rect roi(Point(1, 1), bw.size() - Size(2, 2));
+   const float angleIncrement = 360.0f / nWeightPoints;
 
    for (int a = 0; a < nWeightPoints; a++) {
       Vec2f normal;
-      Point p = pointAtAngle(a * 360 / nWeightPoints, &normal);
+      Point p = pointAtAngle(a * angleIncrement, &normal);
       normal /= cv::norm(normal);
       bool pOnEllipse = false;
       if (roi.contains(p)) {
