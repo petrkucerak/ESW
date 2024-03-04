@@ -1,6 +1,3 @@
 [submodule "labs/lab01/json-c"]
 	path = labs/lab01/json-c
 	url = https://github.com/json-c/json-c.git
-[submodule "labs/lab03/epoll-in-c"]
-	path = labs/lab03/epoll-in-c
-	url = https://gitlab.fel.cvut.cz/esw/epoll-in-c.git
