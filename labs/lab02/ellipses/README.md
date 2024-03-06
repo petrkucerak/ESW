@@ -32,3 +32,6 @@ And finally run the project:
 
 [cachix.org]: https://www.cachix.org/
 [esw cache]: https://app.cachix.org/organization/ctu-esw/cache/esw#pull
+
+
+    meson setup build --buildtype=plain && meson compile --verbose -C build && ./build/ellipse/find_ellipse images/table.jpg 1000 no-gui

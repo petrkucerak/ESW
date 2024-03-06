@@ -1,0 +1,95 @@
+diff --git a/ellipse/ellipse.cpp b/ellipse/ellipse.cpp
+index 61cd021..d6ea8c6 100644
+--- a/ellipse/ellipse.cpp
++++ b/ellipse/ellipse.cpp
+@@ -117,21 +117,21 @@ Ellipse::Ellipse(Point2f center, Size2f size, float angle)
+     : cv::RotatedRect(center, size, angle)
+ {}
+ 
+-Point Ellipse::pointAtAngle(double a, Vec2f *normal = 0) const
++Point Ellipse::pointAtAngle(double a, double s, double c) const
+ {
+-    double s = sin(angle/180.0*M_PI);
+-    double c = cos(angle/180.0*M_PI);
++    // double s = sin(angle/180.0*M_PI);
++    // double c = cos(angle/180.0*M_PI);
+     Matx22f rot(c, -s,
+                 s, c);
+     Vec2f v(cos(a/180.0*M_PI) * size.width/2.0,
+             sin(a/180.0*M_PI) * size.height/2.0);
+     v = rot * v;
+ 
+-    if (normal) {
+-        Vec2f &n = *normal;
+-        n = Vec2f(+cos(a/180.0*M_PI) * size.height/2.0, +sin(a/180.0*M_PI) * size.width/2.0);
+-        n = rot * n;
+-    }
++    // if (normal) {
++    //     Vec2f &n = *normal;
++    //     n = Vec2f(+cos(a/180.0*M_PI) * size.height/2.0, +sin(a/180.0*M_PI) * size.width/2.0);
++    //     n = rot * n;
++    // }
+     return Point(center.x + v[0], center.y + v[1]);
+ }
+ 
+@@ -165,10 +165,13 @@ void Ellipse::calcWeight(const Mat1b &bw, Mat3b *dbg, std::vector<Point> *points
+     unsigned ptsInRoi = 0;
+     Rect roi(Point(1, 1), bw.size() - Size(2, 2));
+ 
++    double s = sin(angle/180.0*M_PI);
++    double c = cos(angle/180.0*M_PI);
++
+     for (int a = 0; a < nWeightPoints; a++) {
+-        Vec2f normal;
+-        Point p = pointAtAngle(a * 360 / nWeightPoints, &normal);
+-        normal /= cv::norm(normal);
++        // Vec2f normal;
++        Point p = pointAtAngle(a * 360 / nWeightPoints, s,c);
++        // normal /= cv::norm(normal);
+         bool pOnEllipse = false;
+         if (roi.contains(p)) {
+             ptsInRoi++;
+@@ -178,13 +181,13 @@ void Ellipse::calcWeight(const Mat1b &bw, Mat3b *dbg, std::vector<Point> *points
+             ptsOnEllipse += pOnEllipse;
+             if (pointsOnEllipse && pOnEllipse)
+                 pointsOnEllipse->push_back(realP);
+-            if (dbg) {
+-                normal = normal / cv::norm(normal) * 10.0;
+-                //line(*dbg, p, p+Point(20*cos(tangentAng), 20*sin(tangentAng)), CV_RGB(255, 255, 0));
+-                if (pOnEllipse)
+-                    (*dbg)(realP) = Vec3b(0, 255, 255);
+-                (*dbg)(p) = pOnEllipse ? Vec3b(0, 255, 0) : Vec3b(200, 0, 100);
+-            }
++            // if (dbg) {
++            //     normal = normal / cv::norm(normal) * 10.0;
++            //     //line(*dbg, p, p+Point(20*cos(tangentAng), 20*sin(tangentAng)), CV_RGB(255, 255, 0));
++            //     if (pOnEllipse)
++            //         (*dbg)(realP) = Vec3b(0, 255, 255);
++            //     (*dbg)(p) = pOnEllipse ? Vec3b(0, 255, 0) : Vec3b(200, 0, 100);
++            // }
+         }
+     }
+ 
+diff --git a/ellipse/ellipse.h b/ellipse/ellipse.h
+index 3b022d1..4f8fe97 100644
+--- a/ellipse/ellipse.h
++++ b/ellipse/ellipse.h
+@@ -14,7 +14,7 @@ public:
+     static Ellipse fit(const std::vector<cv::Point> &p);
+     static Ellipse invalid() { return Ellipse(); }
+ 
+-    cv::Point pointAtAngle(double a, cv::Vec2f *normal) const;
++    cv::Point pointAtAngle(double a, double s, double c) const;
+ 
+     cv::Point2f f1, f2;
+ 
+diff --git a/meson.build b/meson.build
+index 9473ca0..87edd90 100644
+--- a/meson.build
++++ b/meson.build
+@@ -1,4 +1,4 @@
+ project('ellipses', 'cpp', default_options: [
+-  'cpp_args=-Og -g'
++  'cpp_args=-Og -g -O3 -march=native'
+ ])
+ subdir('ellipse')

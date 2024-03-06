@@ -14,7 +14,7 @@ public:
     static Ellipse fit(const std::vector<cv::Point> &p);
     static Ellipse invalid() { return Ellipse(); }
 
-    cv::Point pointAtAngle(double a, cv::Vec2f *normal) const;
+    cv::Point pointAtAngle(double a, double s, double c) const;
 
     cv::Point2f f1, f2;
 
