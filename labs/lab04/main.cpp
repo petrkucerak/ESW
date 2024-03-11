@@ -174,6 +174,17 @@ int main(int argc, char *argv[])
 
    printf("Size of one list element: %zu\n", sizeof(struct esw_node));
 
+// Added by user
+#ifdef USE_MUTEX
+   printf("USE_MUTEX\n");
+#endif
+#ifdef USE_RWLOCK
+   printf("USE_RWLOCK\n");
+#endif
+#ifdef USE_RC
+   printf("USE_RC\n");
+#endif
+
    init_list();
 
    signal(SIGINT, sig_handler);
