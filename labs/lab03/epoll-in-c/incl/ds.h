@@ -5,8 +5,8 @@
 #define MAX_EVENTS 64
 
 struct ep_entry {
-	int fd;
-	enum {ESW_EPOLL_STDIN, ESW_EPOLL_TIMER} type;
+   int fd;
+   enum { ESW_EPOLL_STDIN, ESW_EPOLL_TIMER } type;
 };
 
 #endif /* ESW_DS_H */
