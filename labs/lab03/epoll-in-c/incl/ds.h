@@ -6,7 +6,7 @@
 
 struct ep_entry {
    int fd;
-   enum { ESW_EPOLL_STDIN, ESW_EPOLL_TIMER } type;
+   enum { ESW_EPOLL_STDIN, ESW_EPOLL_TIMER, ESW_EPOLL_SERVER_INIT } type;
 };
 
 #endif /* ESW_DS_H */

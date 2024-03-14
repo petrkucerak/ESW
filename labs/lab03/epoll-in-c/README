@@ -20,6 +20,8 @@ Then build the project with meson:
 	meson setup builddir
 	meson compile -C builddir
 
+	meson setup builddir && meson compile -C builddir
+
 And finally test the project:
 
 	meson test -C builddir

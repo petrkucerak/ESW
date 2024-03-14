@@ -1,11 +1,7 @@
-#include <arpa/inet.h>
-#include <fcntl.h>
 #include <signal.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/epoll.h>
-#include <sys/socket.h>
-#include <sys/types.h>
 #include <unistd.h>
 
 #include "handle.h"
@@ -40,24 +36,14 @@ int main()
    ep_set[ep_cnt++] = add_stdin(epfd);
    ep_set[ep_cnt++] = add_timer(epfd, 1000);
    ep_set[ep_cnt++] = add_timer(epfd, 1500);
+   ep_set[ep_cnt++] = add_server(epfd, 12345);
+
    for (i = 0; i < ep_cnt; i++) {
       if (ep_set[i] == NULL) {
          perror("add_...");
          exit(EXIT_FAILURE);
       }
    }
-
-   int sfd = socket(AF_INET, SOCK_STREAM, 0);
-   short int port = 12345;
-   struct sockaddr_in saddr;
-
-   memset(&saddr, 0, sizeof(saddr));
-   saddr.sin_family = AF_INET;                // IPv4
-   saddr.sin_addr.s_addr = htonl(INADDR_ANY); // Bind to all available
-   // interfaces
-   saddr.sin_port = htons(port); // Requested port
-
-   bind(sfd, (struct sockaddr *)&saddr, sizeof(saddr));
 
    while (handle_all(epfd) == rv0) {
    }
