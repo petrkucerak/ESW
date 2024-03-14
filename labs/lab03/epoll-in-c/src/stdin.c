@@ -9,9 +9,9 @@
 
 #define MAX_BUFF 100
 
-struct ep_entry *add_stdin(int epfd)
+ep_entry_t *add_stdin(int epfd)
 {
-   struct ep_entry *e;
+   ep_entry_t *e;
    e = new_e();
    e->type = ESW_EPOLL_STDIN;
    e->fd = STDIN_FILENO;
@@ -19,7 +19,7 @@ struct ep_entry *add_stdin(int epfd)
    return e;
 }
 
-int handle_stdin(struct ep_entry *e)
+int handle_stdin(ep_entry_t *e)
 {
    char in[MAX_BUFF];
    memset(in, 0, MAX_BUFF);

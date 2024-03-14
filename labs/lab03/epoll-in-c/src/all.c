@@ -7,10 +7,10 @@
 #include "ds.h"
 #include "handle.h"
 
-struct ep_entry *new_e()
+ep_entry_t *new_e()
 {
-   struct ep_entry *e;
-   e = (struct ep_entry *)malloc(sizeof(struct ep_entry));
+   ep_entry_t *e;
+   e = (ep_entry_t *)malloc(sizeof(ep_entry_t));
    if (e == NULL) {
       perror("new_e malloc");
       exit(EXIT_FAILURE);
@@ -18,7 +18,7 @@ struct ep_entry *new_e()
    return e;
 }
 
-int add_e(int epfd, struct ep_entry *e)
+int add_e(int epfd, ep_entry_t *e)
 {
    struct epoll_event ee;
    ee.events = EPOLLIN;
@@ -30,7 +30,7 @@ int add_e(int epfd, struct ep_entry *e)
    return 0;
 }
 
-int del_e(int epfd, struct ep_entry *e)
+int del_e(int epfd, ep_entry_t *e)
 {
    struct epoll_event ee = {.events = 0, .data.ptr = e};
    if (epoll_ctl(epfd, EPOLL_CTL_DEL, e->fd, &ee) == -1) {
@@ -56,7 +56,7 @@ int handle_all(ep_data_t ep)
       exit(EXIT_FAILURE);
    }
    for (i = 0; i < n; i++) {
-      struct ep_entry *e = (struct ep_entry *)events[i].data.ptr;
+      ep_entry_t *e = (ep_entry_t *)events[i].data.ptr;
       if ((events[i].events & EPOLLERR) || (events[i].events & EPOLLHUP) ||
           !(events[i].events & EPOLLIN)) {
          // An error has occured on this fd, or the socket is not ready for

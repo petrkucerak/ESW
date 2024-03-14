@@ -7,9 +7,9 @@
 #include "ds.h"
 #include "handle.h"
 
-struct ep_entry *add_timer(int epfd, unsigned int ms)
+ep_entry_t *add_timer(int epfd, unsigned int ms)
 {
-   struct ep_entry *e;
+   ep_entry_t *e;
    struct timespec t = {.tv_sec = ms / 1000, .tv_nsec = (ms % 1000) * 1000000};
    struct itimerspec it = {.it_interval = t, .it_value = t};
    e = new_e();
@@ -27,7 +27,7 @@ struct ep_entry *add_timer(int epfd, unsigned int ms)
    return e;
 }
 
-int handle_timer(struct ep_entry *e)
+int handle_timer(ep_entry_t *e)
 {
    uint64_t in;
    if (read(e->fd, &in, 8) == -1) {

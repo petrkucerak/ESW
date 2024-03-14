@@ -9,7 +9,7 @@
 
 #include "handle.h"
 
-struct ep_entry *add_server(int epfd, uint16_t port)
+ep_entry_t *add_server(int epfd, uint16_t port)
 {
 
    int sfd = socket(AF_INET, SOCK_STREAM, 0);
@@ -39,7 +39,7 @@ struct ep_entry *add_server(int epfd, uint16_t port)
 
    listen(sfd, SOMAXCONN);
 
-   struct ep_entry *e;
+   ep_entry_t *e;
    e = new_e();
    e->type = ESW_EPOLL_SERVER_INIT;
    e->fd = sfd;
@@ -48,7 +48,7 @@ struct ep_entry *add_server(int epfd, uint16_t port)
    return e;
 }
 
-int handle_new_connection(struct ep_entry *e)
+int handle_new_connection(ep_entry_t *e )
 {
    // accetp connection
    int cfd = accept(e->fd, NULL, NULL);
