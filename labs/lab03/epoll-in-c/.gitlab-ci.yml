@@ -1,0 +1,7 @@
+image: nixos/nix
+test:
+  stage: test
+  script:
+    - nix-shell --run 'meson setup builddir'
+    - nix-shell --run 'meson compile -C builddir -v'
+    - nix-shell --run 'meson test -C builddir -v'

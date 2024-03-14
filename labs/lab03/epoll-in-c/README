@@ -1,0 +1,25 @@
+This repository is simple example of non-blocking I/O event handling. It also
+serves as a template for the assignment of Effective Software (ESW) course.
+
+This project is written in C.
+
+See the man pages for:
+- epoll
+- epoll_create1
+- epoll_ctl
+- epoll_wait
+- timerfd_create
+
+
+To build the project, install dependencies or use nix shell:
+
+	nix-shell
+
+Then build the project with meson:
+
+	meson setup builddir
+	meson compile -C builddir
+
+And finally test the project:
+
+	meson test -C builddir
