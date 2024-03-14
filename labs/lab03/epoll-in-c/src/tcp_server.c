@@ -57,7 +57,8 @@ int handle_server_connection(ep_entry_t *e, ep_data_t *ep)
       perror("handle_server_connection");
       return -1;
    }
-   printf("handle_server_connection %d\n", e->fd);
+   // printf("handle_server_connection %d\n", e->fd);
+   fcntl(cfd, F_SETFL, O_NONBLOCK);
    ep->ep_set[ep->ep_cnt++] = new_communication(cfd, ep);
    return 0;
 }
