@@ -59,6 +59,8 @@ int handle_all(int epfd)
       struct ep_entry *e = (struct ep_entry *)events[i].data.ptr;
       if ((events[i].events & EPOLLERR) || (events[i].events & EPOLLHUP) ||
           !(events[i].events & EPOLLIN)) {
+         // An error has occured on this fd, or the socket is not ready for
+         // reading
          del_e(epfd, e);
          continue;
       }
@@ -68,6 +70,9 @@ int handle_all(int epfd)
          break;
       case ESW_EPOLL_TIMER:
          handle_timer(events[i].data.ptr);
+         break;
+      case ESW_EPOLL_SERVER_INIT:
+         handle_new_connection(events[i].data.ptr);
          break;
       default:
          return -1;

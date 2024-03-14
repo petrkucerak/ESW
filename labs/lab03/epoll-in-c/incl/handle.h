@@ -16,5 +16,6 @@ int del_e(int epfd, struct ep_entry *e);
 int handle_all(int epfd);
 
 struct ep_entry *add_server(int epfd, uint16_t port);
+int handle_new_connection(struct ep_entry *e);
 
 #endif /* ESW_HANDLE_H */

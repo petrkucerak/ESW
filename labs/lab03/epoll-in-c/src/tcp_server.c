@@ -47,3 +47,9 @@ struct ep_entry *add_server(int epfd, uint16_t port)
    add_e(epfd, e);
    return e;
 }
+
+int handle_new_connection(struct ep_entry *e)
+{
+   printf("handle_new_connection %d\n", e->fd);
+   return 0;
+}
