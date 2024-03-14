@@ -50,6 +50,12 @@ struct ep_entry *add_server(int epfd, uint16_t port)
 
 int handle_new_connection(struct ep_entry *e)
 {
+   // accetp connection
+   int cfd = accept(e->fd, NULL, NULL);
+   if (cfd == -1) {
+      perror("handle_new_connection");
+      return -1;
+   }
    printf("handle_new_connection %d\n", e->fd);
    return 0;
 }
