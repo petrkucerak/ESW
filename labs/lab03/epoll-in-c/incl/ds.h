@@ -3,6 +3,7 @@
 #define ESW_DS_H
 
 #define MAX_EVENTS 64
+#define BUF_SIZE 42
 
 typedef struct ep_entry {
    int fd;

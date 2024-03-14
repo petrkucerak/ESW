@@ -49,6 +49,7 @@ int main()
    }
 
    while (handle_all(&ep) == rv0) {
+      // printf("%d\n", ep.ep_cnt);
    }
    for (i = 0; i < ep.ep_cnt; i++) {
       del_e(ep.epfd, ep.ep_set[i]);

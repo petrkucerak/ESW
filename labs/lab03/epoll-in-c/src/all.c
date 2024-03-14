@@ -72,7 +72,10 @@ int handle_all(ep_data_t *ep)
          handle_timer(events[i].data.ptr);
          break;
       case ESW_EPOLL_SERVER_INIT:
-         handle_new_connection(events[i].data.ptr, ep);
+         handle_server_connection(events[i].data.ptr, ep);
+         break;
+      case ESW_EPOLL_SERVER_COMMUNICATION:
+         handle_server_communication(events[i].data.ptr);
          break;
       default:
          return -1;

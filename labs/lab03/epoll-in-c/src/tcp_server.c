@@ -6,6 +6,7 @@
 #include <string.h>
 #include <sys/socket.h>
 #include <sys/types.h>
+#include <unistd.h>
 
 #include "handle.h"
 
@@ -48,15 +49,15 @@ ep_entry_t *add_server(int epfd, uint16_t port)
    return e;
 }
 
-int handle_new_connection(ep_entry_t *e, ep_data_t *ep)
+int handle_server_connection(ep_entry_t *e, ep_data_t *ep)
 {
    // accetp connection
    int cfd = accept(e->fd, NULL, NULL);
    if (cfd == -1) {
-      perror("handle_new_connection");
+      perror("handle_server_connection");
       return -1;
    }
-   printf("handle_new_connection %d\n", e->fd);
+   printf("handle_server_connection %d\n", e->fd);
    ep->ep_set[ep->ep_cnt++] = new_communication(cfd, ep);
    return 0;
 }
@@ -70,4 +71,16 @@ ep_entry_t *new_communication(int cfd, ep_data_t *ep)
    e->count = 0;
    add_e(ep->epfd, e);
    return e;
+}
+
+int handle_server_communication(ep_entry_t *e)
+{
+   char tmp_buff[BUF_SIZE];
+   memset(tmp_buff, 0, BUF_SIZE);
+   int tmp_count = read(e->fd, tmp_buff, BUF_SIZE);
+   if (write(e->fd, tmp_buff, tmp_count) == -1) {
+      perror("handle_server_communication");
+      return -1;
+   };
+   return 0;
 }
