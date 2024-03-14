@@ -6,7 +6,8 @@
 
 typedef struct ep_entry {
    int fd;
-   enum { ESW_EPOLL_STDIN, ESW_EPOLL_TIMER, ESW_EPOLL_SERVER_INIT } type;
+   uint32_t count;
+   enum { ESW_EPOLL_STDIN, ESW_EPOLL_TIMER, ESW_EPOLL_SERVER_INIT,ESW_EPOLL_SERVER_COMMUNICATION } type;
 } ep_entry_t;
 
 typedef struct ep_data {

@@ -48,7 +48,7 @@ int main()
       }
    }
 
-   while (handle_all(ep) == rv0) {
+   while (handle_all(&ep) == rv0) {
    }
    for (i = 0; i < ep.ep_cnt; i++) {
       del_e(ep.epfd, ep.ep_set[i]);

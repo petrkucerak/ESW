@@ -48,7 +48,7 @@ ep_entry_t *add_server(int epfd, uint16_t port)
    return e;
 }
 
-int handle_new_connection(ep_entry_t *e )
+int handle_new_connection(ep_entry_t *e, ep_data_t *ep)
 {
    // accetp connection
    int cfd = accept(e->fd, NULL, NULL);
@@ -57,6 +57,17 @@ int handle_new_connection(ep_entry_t *e )
       return -1;
    }
    printf("handle_new_connection %d\n", e->fd);
+   ep->ep_set[ep->ep_cnt++] = new_communication(cfd, ep);
    return 0;
 }
 
+ep_entry_t *new_communication(int cfd, ep_data_t *ep)
+{
+   ep_entry_t *e;
+   e = new_e();
+   e->type = ESW_EPOLL_SERVER_COMMUNICATION;
+   e->fd = cfd;
+   e->count = 0;
+   add_e(ep->epfd, e);
+   return e;
+}

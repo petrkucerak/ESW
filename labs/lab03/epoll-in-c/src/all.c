@@ -43,11 +43,11 @@ int del_e(int epfd, ep_entry_t *e)
    return 0;
 }
 
-int handle_all(ep_data_t ep)
+int handle_all(ep_data_t *ep)
 {
    struct epoll_event events[MAX_EVENTS];
    int n, i;
-   n = epoll_wait(ep.epfd, events, MAX_EVENTS, -1);
+   n = epoll_wait(ep->epfd, events, MAX_EVENTS, -1);
    if (n == -1) {
       if (errno == EINTR) {
          return -1;
@@ -61,7 +61,7 @@ int handle_all(ep_data_t ep)
           !(events[i].events & EPOLLIN)) {
          // An error has occured on this fd, or the socket is not ready for
          // reading
-         del_e(ep.epfd, e);
+         del_e(ep->epfd, e);
          continue;
       }
       switch (e->type) {
@@ -72,7 +72,7 @@ int handle_all(ep_data_t ep)
          handle_timer(events[i].data.ptr);
          break;
       case ESW_EPOLL_SERVER_INIT:
-         handle_new_connection(events[i].data.ptr);
+         handle_new_connection(events[i].data.ptr, ep);
          break;
       default:
          return -1;
