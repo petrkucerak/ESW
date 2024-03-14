@@ -13,7 +13,7 @@ int handle_timer(struct ep_entry *e);
 struct ep_entry *new_e();
 int add_e(int epfd, struct ep_entry *e);
 int del_e(int epfd, struct ep_entry *e);
-int handle_all(int epfd);
+int handle_all(ep_data_t ep);
 
 struct ep_entry *add_server(int epfd, uint16_t port);
 int handle_new_connection(struct ep_entry *e);

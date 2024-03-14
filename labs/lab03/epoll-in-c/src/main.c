@@ -18,8 +18,10 @@ static void term(int sn)
 
 int main()
 {
-   int epfd, ep_cnt = 0, i;
-   struct ep_entry *ep_set[MAX_EVENTS];
+   int i;
+   ep_data_t ep;
+   ep.ep_cnt = 0;
+
    struct sigaction sa = {.sa_handler = term, .sa_flags = SA_RESTART};
    if (sigaction(SIGINT, &sa, NULL) == -1) {
       perror("sigaction");
@@ -29,28 +31,28 @@ int main()
       perror("sigaction");
       exit(EXIT_FAILURE);
    }
-   epfd = epoll_create1(0);
-   if (epfd == -1) {
+   ep.epfd = epoll_create1(0);
+   if (ep.epfd == -1) {
       perror("epoll_create1");
       exit(EXIT_FAILURE);
    }
-   ep_set[ep_cnt++] = add_stdin(epfd);
-   ep_set[ep_cnt++] = add_timer(epfd, 1000);
-   ep_set[ep_cnt++] = add_timer(epfd, 1500);
-   ep_set[ep_cnt++] = add_server(epfd, 12345);
+   ep.ep_set[ep.ep_cnt++] = add_stdin(ep.epfd);
+   ep.ep_set[ep.ep_cnt++] = add_timer(ep.epfd, 1000);
+   ep.ep_set[ep.ep_cnt++] = add_timer(ep.epfd, 1500);
+   ep.ep_set[ep.ep_cnt++] = add_server(ep.epfd, 12345);
 
-   for (i = 0; i < ep_cnt; i++) {
-      if (ep_set[i] == NULL) {
+   for (i = 0; i < ep.ep_cnt; i++) {
+      if (ep.ep_set[i] == NULL) {
          perror("add_...");
          exit(EXIT_FAILURE);
       }
    }
 
-   while (handle_all(epfd) == rv0) {
+   while (handle_all(ep) == rv0) {
    }
-   for (i = 0; i < ep_cnt; i++) {
-      del_e(epfd, ep_set[i]);
+   for (i = 0; i < ep.ep_cnt; i++) {
+      del_e(ep.epfd, ep.ep_set[i]);
    }
-   close(epfd);
+   close(ep.epfd);
    return 0;
 }
