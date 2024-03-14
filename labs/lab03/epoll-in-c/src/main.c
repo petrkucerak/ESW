@@ -5,6 +5,7 @@
 #include <unistd.h>
 
 #include "handle.h"
+#include <bits/sigaction.h>
 
 static volatile int rv0 = 0;
 
