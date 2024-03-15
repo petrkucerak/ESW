@@ -27,3 +27,5 @@ And finally test the project:
 	meson test -C builddir
 
 To build archive for uploading to brute
+
+	zip kucerp28-epol.zip incl/* src/* meson.build shell.nix 
