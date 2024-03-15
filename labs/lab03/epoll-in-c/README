@@ -25,3 +25,5 @@ Then build the project with meson:
 And finally test the project:
 
 	meson test -C builddir
+
+To build archive for uploading to brute

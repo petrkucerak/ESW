@@ -79,19 +79,21 @@ int handle_server_communication(ep_entry_t *e)
    char tmp_buff[BUF_SIZE];
    memset(tmp_buff, 0, BUF_SIZE);
    int tmp_count = read(e->fd, tmp_buff, BUF_SIZE);
-   e->count += tmp_count;
-   // if string contains end of line \n
-   for (uint16_t i = 0; i < BUF_SIZE; ++i) {
-      if (tmp_buff[i] == '\n') {
-         e->count -= 1;
-         char ret_count[10];
-         sprintf(ret_count, "%u\n", e->count);
-         if (write(e->fd, ret_count, e->count + 1) == -1) {
-            perror("handle_server_communication");
-            return -1;
-         };
-         e->count = 0;
-         break;
+   if (tmp_count != -1 && tmp_count != 0) {
+      e->count += tmp_count;
+      // if string contains end of line \n
+      for (uint16_t i = 0; i < BUF_SIZE; ++i) {
+         if (tmp_buff[i] == '\n') {
+            e->count -= 1;
+            char ret_count[10];
+            sprintf(ret_count, "%u\n", e->count);
+            if (write(e->fd, ret_count, strlen(ret_count)) == -1) {
+               perror("handle_server_communication");
+               return -1;
+            };
+            e->count = 0;
+            break;
+         }
       }
    }
    return 0;
