@@ -74,31 +74,34 @@ ep_entry_t *new_communication(int cfd, ep_data_t *ep)
    return e;
 }
 
-int handle_server_communication(ep_entry_t *e)
+int handle_server_communication(ep_entry_t *e, ep_data_t *ep)
 {
-   char tmp_buff[BUF_SIZE];
-   memset(tmp_buff, 0, BUF_SIZE); // null the buffer
-   int tmp_count = read(e->fd, tmp_buff, BUF_SIZE);
-   if (tmp_count == -1) {
-      perror("handle_server_communication read");
-      return -1;
-   }
-   if (tmp_count != 0) {
+   char tmp_buff[TMP_BUF_SIZE];
+   memset(tmp_buff, 0, TMP_BUF_SIZE); // null the buffer
+   int tmp_count = read(e->fd, tmp_buff, TMP_BUF_SIZE - 1);
+   // if (tmp_count == -1) {
+   //    perror("handle_server_communication read");
+   //    return -1;
+   // }
+   if (tmp_count != 0 && tmp_count != -1) {
+      memcpy(e->buffer + e->count, tmp_buff, tmp_count);
       e->count += tmp_count;
+      char *end;
       // if string contains end of line \n
-      for (uint16_t i = 0; i < BUF_SIZE; ++i) {
-         if (tmp_buff[i] == '\n') {
-            e->count -= 1;
-            char ret_count[10];
-            sprintf(ret_count, "%u\n", e->count);
-            if (write(e->fd, ret_count, strlen(ret_count)) == -1) {
-               perror("handle_server_communication write");
-               return -1;
-            };
-            e->count = 0;
-            break;
-         }
+      while ((end = strstr(e->buffer, "\n")) != NULL) {
+         *end = '\0';
+         char ret_count[24];
+         sprintf(ret_count, "%lu\n", strlen(e->buffer));
+         if (write(e->fd, ret_count, strlen(ret_count)) == -1) {
+            perror("handle_server_communication write");
+            return -1;
+         };
+         e->count -= (strlen(e->buffer) + 1);
+         memcpy(e->buffer, end + 1, BUF_SIZE);
       }
+   }
+   if (!tmp_count) {
+      del_e(ep->epfd, e);
    }
    return 0;
 }
