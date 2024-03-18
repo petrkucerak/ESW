@@ -74,12 +74,16 @@ ep_entry_t *new_communication(int cfd, ep_data_t *ep)
    return e;
 }
 
-int handle_server_communication(ep_entry_t *e)
+int handle_server_communication(ep_entry_t *e, ep_data_t *ep)
 {
    char tmp_buff[BUF_SIZE];
    memset(tmp_buff, 0, BUF_SIZE);
    int tmp_count = read(e->fd, tmp_buff, BUF_SIZE);
-   if (tmp_count != -1 && tmp_count != 0) {
+   if (tmp_count == 0) {
+      // printf("Remove client by `del_e`\n");
+      del_e(ep->epfd, e);
+   }
+   if (tmp_count != -1) {
       // if string contains end of line \n
       for (uint16_t i = 0; i < tmp_count; ++i) {
          if (tmp_buff[i] == '\n') {

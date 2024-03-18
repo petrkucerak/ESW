@@ -18,6 +18,6 @@ int handle_all(ep_data_t *ep);
 ep_entry_t *add_server(int epfd, uint16_t port);
 int handle_server_connection(ep_entry_t *e, ep_data_t *ep);
 ep_entry_t *new_communication(int cfd, ep_data_t *ep);
-int handle_server_communication(ep_entry_t *e);
+int handle_server_communication(ep_entry_t *e, ep_data_t *ep);
 
 #endif /* ESW_HANDLE_H */
