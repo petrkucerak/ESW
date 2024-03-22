@@ -1,0 +1,33 @@
+# Read, copy, update
+
+To build the project, install dependencies or use Nix shell:
+
+```sh
+nix-shell
+```
+
+Then build the project with meson:
+
+```sh
+meson setup builddir
+meson compile --verbose -C builddir
+```
+
+NOTE: Using --verbose prints commands used to build the project to the terminal.
+
+And finally measure performance of list traversal when mutex, rwlock,
+or RCU are used:
+
+```sh
+./builddir/list_mutex 4
+./builddir/list_rwlock 4
+./builddir/list_rcu 4
+```
+
+Debug messages demonstrating the functionality of the program can be
+enabled by runningL
+
+```sh
+meson configure builddir -Dcpp_args="-DDEBUG"
+meson compile --verbose -C builddir
+```
