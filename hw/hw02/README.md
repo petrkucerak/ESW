@@ -1,4 +1,4 @@
-# Epol server
+# Epoll server
 
 To build the project, install dependencies or use nix shell:
 
