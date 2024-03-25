@@ -1,8 +1,8 @@
 diff --git a/list.cpp b/list.cpp
-index 13f14cc..a906deb 100644
+index 13f14cc..18a378f 100644
 --- a/list.cpp
 +++ b/list.cpp
-@@ -4,23 +4,25 @@
+@@ -4,23 +4,24 @@
  #include <stdlib.h>
  #include <string.h>
  
@@ -21,8 +21,6 @@ index 13f14cc..a906deb 100644
 -#  define rd_unlock(lock) // TODO
 -#  define wr_lock(lock) // TODO
 -#  define wr_unlock(lock) //TODO
-+pthread_rwlockattr_t rwlock_attr;
-+
 +#if defined(USE_MUTEX)
 +#define rd_lock(lock) pthread_mutex_lock(lock)
 +#define rd_unlock(lock) pthread_mutex_unlock(lock)
@@ -33,6 +31,7 @@ index 13f14cc..a906deb 100644
 +#define rd_unlock(lock) pthread_rwlock_unlock(lock)
 +#define wr_lock(lock) pthread_rwlock_wrlock(lock)
 +#define wr_unlock(lock) pthread_rwlock_unlock(lock)
++pthread_rwlockattr_t rwlock_attr;
 +#elif defined(USE_RCU)
 +#define rd_lock(lock) rcu_read_lock()
 +#define rd_unlock(lock) rcu_read_unlock()
@@ -44,7 +43,7 @@ index 13f14cc..a906deb 100644
  #endif
  
  #ifdef DEBUG
-@@ -31,140 +33,181 @@
+@@ -31,140 +32,181 @@
  
  unsigned calc_checksum(const char *str)
  {
