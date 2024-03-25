@@ -4,8 +4,6 @@
 #include <stdlib.h>
 #include <string.h>
 
-pthread_rwlockattr_t rwlock_attr;
-
 #if defined(USE_MUTEX)
 #define rd_lock(lock) pthread_mutex_lock(lock)
 #define rd_unlock(lock) pthread_mutex_unlock(lock)
@@ -16,6 +14,7 @@ pthread_rwlockattr_t rwlock_attr;
 #define rd_unlock(lock) pthread_rwlock_unlock(lock)
 #define wr_lock(lock) pthread_rwlock_wrlock(lock)
 #define wr_unlock(lock) pthread_rwlock_unlock(lock)
+pthread_rwlockattr_t rwlock_attr;
 #elif defined(USE_RCU)
 #define rd_lock(lock) rcu_read_lock()
 #define rd_unlock(lock) rcu_read_unlock()
