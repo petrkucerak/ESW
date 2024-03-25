@@ -14,7 +14,6 @@
 #define rd_unlock(lock) pthread_rwlock_unlock(lock)
 #define wr_lock(lock) pthread_rwlock_wrlock(lock)
 #define wr_unlock(lock) pthread_rwlock_unlock(lock)
-pthread_rwlockattr_t rwlock_attr;
 #elif defined(USE_RCU)
 #define rd_lock(lock) rcu_read_lock()
 #define rd_unlock(lock) rcu_read_unlock()
@@ -24,11 +23,11 @@ pthread_rwlockattr_t rwlock_attr;
 #error "No lock type defined"
 #endif
 
-#ifdef DEBUG
-#define debug_printf(...) printf(__VA_ARGS__)
-#else
-#define debug_printf(...)
-#endif
+// #ifdef DEBUG
+// #define debug_printf(...) printf(__VA_ARGS__)
+// #else
+// #define debug_printf(...)
+// #endif
 
 unsigned calc_checksum(const char *str)
 {
@@ -44,10 +43,11 @@ void esw_list_init(LIST_TYPE *list)
    CHECK(pthread_mutex_init(&list->lock, NULL));
    list->head = NULL;
 #elif defined(USE_RWLOCK)
-   pthread_rwlockattr_init(&rwlock_attr);
-   pthread_rwlockattr_setkind_np(&rwlock_attr,
+   pthread_rwlockattr_init(&list->attr);
+   pthread_rwlockattr_setkind_np(&list->attr,
                                  PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
-   pthread_rwlock_init(&list->lock, &rwlock_attr);
+   pthread_rwlock_init(&list->lock, &list->attr);
+   list->head = NULL;
 #elif defined(USE_RCU)
    CDS_INIT_LIST_HEAD(list);
 #else
@@ -62,7 +62,7 @@ void esw_list_push(LIST_TYPE *list, const char *const key,
    assert(key);
    assert(value);
 
-   debug_printf("Pushing %s: %s\n", key, value);
+   // debug_printf("Pushing %s: %s\n", key, value);
 
    esw_node_t *node = esw_list_create_node(key, value);
 #if defined(USE_MUTEX) || defined(USE_RWLOCK)
@@ -87,8 +87,8 @@ void esw_list_update(LIST_TYPE *list, const char *const key,
    while (current != NULL) {
       if (strcmp(current->key, key) == 0) {
          char *new_value = strdup(value);
-         debug_printf("Updating %s: %s -> %s\n", key, current->value,
-                      new_value);
+         // debug_printf("Updating %s: %s -> %s\n", key, current->value,
+         //              new_value);
          free(current->value);
          current->value = new_value;
          current->checksum = calc_checksum(new_value);

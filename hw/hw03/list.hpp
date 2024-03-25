@@ -36,6 +36,7 @@ typedef struct esw_list {
 #if defined(USE_MUTEX)
    pthread_mutex_t lock;
 #elif defined(USE_RWLOCK)
+   pthread_rwlockattr_t attr;
    pthread_rwlock_t lock;
 #endif
 } esw_list_t;
