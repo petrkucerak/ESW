@@ -4,21 +4,23 @@
 #include <stdlib.h>
 #include <string.h>
 
+pthread_rwlockattr_t rwlock_attr;
+
 #if defined(USE_MUTEX)
 #define rd_lock(lock) pthread_mutex_lock(lock)
 #define rd_unlock(lock) pthread_mutex_unlock(lock)
 #define wr_lock(lock) pthread_mutex_lock(lock)
 #define wr_unlock(lock) pthread_mutex_unlock(lock)
 #elif defined(USE_RWLOCK)
-#define rd_lock(lock)   // TODO
-#define rd_unlock(lock) // TODO
-#define wr_lock(lock)   // TODO
-#define wr_unlock(lock) // TODO
+#define rd_lock(lock) pthread_rwlock_rdlock(lock)
+#define rd_unlock(lock) pthread_rwlock_unlock(lock)
+#define wr_lock(lock) pthread_rwlock_wrlock(lock)
+#define wr_unlock(lock) pthread_rwlock_unlock(lock)
 #elif defined(USE_RCU)
-#define rd_lock(lock)   // TODO
-#define rd_unlock(lock) // TODO
-#define wr_lock(lock)   // TODO
-#define wr_unlock(lock) // TODO
+#define rd_lock(lock) rcu_read_lock()
+#define rd_unlock(lock) rcu_read_unlock()
+#define wr_lock(lock) rcu_write_lock()
+#define wr_unlock(lock) rcu_write_unlock()
 #else
 #error "No lock type defined"
 #endif
@@ -43,9 +45,12 @@ void esw_list_init(LIST_TYPE *list)
    CHECK(pthread_mutex_init(&list->lock, NULL));
    list->head = NULL;
 #elif defined(USE_RWLOCK)
-   // TODO
+   pthread_rwlockattr_init(&rwlock_attr);
+   pthread_rwlockattr_setkind_np(&rwlock_attr,
+                                 PTHREAD_RWLOCK_PREFER_WRITER_NONRECURSIVE_NP);
+   pthread_rwlock_init(&list->lock, &rwlock_attr);
 #elif defined(USE_RCU)
-   // TODO
+   CDS_INIT_LIST_HEAD(list);
 #else
 #error "No lock type defined"
 #endif
@@ -67,7 +72,7 @@ void esw_list_push(LIST_TYPE *list, const char *const key,
    list->head = node;
    wr_unlock(&list->lock);
 #elif defined(USE_RCU)
-   // TODO
+   cds_list_add_rcu(&node->node, list);
 #endif
 }
 
@@ -94,7 +99,18 @@ void esw_list_update(LIST_TYPE *list, const char *const key,
    }
    wr_unlock(&list->lock);
 #elif defined(USE_RCU)
-   // TODO
+   esw_node_t *new_node = esw_list_create_node(key, value);
+   struct cds_list_head *curr, *tmp;
+   cds_list_for_each_safe(curr, tmp, list)
+   {
+      esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
+      if (strcmp(node->key, key) == 0) {
+         cds_list_replace_rcu(curr, &new_node->node);
+         synchronize_rcu();
+         esw_list_free_node(node);
+         break;
+      }
+   }
 #endif
 }
 
@@ -126,7 +142,24 @@ bool esw_list_find(LIST_TYPE *list, const char *const key, char *value,
       current = current->next;
    }
 #elif defined(USE_RCU)
-   // TODO
+   esw_node_t *node;
+   cds_list_for_each_entry_rcu(node, list, node)
+   {
+      if (strcmp(node->key, key) == 0) {
+         if (strlen(node->value) < max_len) {
+            strcpy(value, node->value);
+            if (calc_checksum(value) != node->checksum)
+               errx(1, "%s:%d wrong checksum", __FILE__, __LINE__);
+         } else {
+            strncpy(value, node->value, max_len - 1);
+            value[max_len - 1] = '\0';
+            if (calc_checksum(value) != node->checksum)
+               errx(1, "%s:%d wrong checksum", __FILE__, __LINE__);
+         }
+         found = true;
+         break;
+      }
+   }
 #endif
    rd_unlock(&list->lock);
 
@@ -163,7 +196,13 @@ void esw_list_free_content(LIST_TYPE *list)
       esw_list_free_node(tmp);
    }
 #elif defined(USE_RCU)
-   // TODO (not necessary)
+   struct cds_list_head *curr, *tmp;
+   cds_list_for_each_safe(curr, tmp, list)
+   {
+      esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
+      cds_list_del(curr);
+      esw_list_free_node(node);
+   }
 #endif
 }
 
