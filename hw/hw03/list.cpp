@@ -105,7 +105,7 @@ void esw_list_update(LIST_TYPE *list, const char *const key,
          struct esw_node *new_node = esw_list_create_node(key, value);
          cds_list_replace_rcu(&current->node, &new_node->node);
          esw_list_free_node(current);
-         // urcu_qsbr_call_rcu(&current->rcu_head, esw_list_free_node);
+         // urcu_qsbr_call_rcu(&current->node, esw_list_free_node);
          break;
       }
    }
@@ -178,7 +178,7 @@ void esw_list_free_node(esw_node_t *node)
 {
    free(node->key);
    free(node->value);
-   free(node);
+   // free(node);
 }
 
 void esw_list_free_content(LIST_TYPE *list)
