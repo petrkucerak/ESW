@@ -1,8 +1,8 @@
 diff --git a/list.cpp b/list.cpp
-index 13f14cc..5fc13c7 100644
+index 13f14cc..00f243d 100644
 --- a/list.cpp
 +++ b/list.cpp
-@@ -4,167 +4,208 @@
+@@ -4,167 +4,209 @@
  #include <stdlib.h>
  #include <string.h>
  
@@ -34,8 +34,8 @@ index 13f14cc..5fc13c7 100644
 +#elif defined(USE_RCU)
 +#define rd_lock(lock) rcu_read_lock()
 +#define rd_unlock(lock) rcu_read_unlock()
-+#define wr_lock(lock) rcu_write_lock()
-+#define wr_unlock(lock) rcu_write_unlock()
++// #define wr_lock(lock) rcu_write_lock()
++// #define wr_unlock(lock) rcu_write_unlock()
  #else
 -#  error "No lock type defined"
 +#error "No lock type defined"
@@ -174,6 +174,7 @@ index 13f14cc..5fc13c7 100644
 +      if (strcmp(current->key, key) == 0) {
 +         struct esw_node *new_node = esw_list_create_node(key, value);
 +         cds_list_replace_rcu(&current->node, &new_node->node);
++         synchronize_rcu();
 +         esw_list_free_node(current);
 +         // urcu_qsbr_call_rcu(&current->node, esw_list_free_node);
 +         break;
@@ -285,7 +286,7 @@ index 13f14cc..5fc13c7 100644
 -    free(node);
 +   free(node->key);
 +   free(node->value);
-+   // free(node);
++   free(node);
  }
  
  void esw_list_free_content(LIST_TYPE *list)
@@ -313,13 +314,13 @@ index 13f14cc..5fc13c7 100644
 +      esw_list_free_node(tmp);
 +   }
 +#elif defined(USE_RCU)
-+   struct cds_list_head *curr, *tmp;
-+   cds_list_for_each_safe(curr, tmp, list)
-+   {
-+      esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
-+      cds_list_del(curr);
-+      esw_list_free_node(node);
-+   }
++   // struct cds_list_head *curr, *tmp;
++   // cds_list_for_each_safe(curr, tmp, list)
++   // {
++   //    esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
++   //    cds_list_del(curr);
++   //    esw_list_free_node(node);
++   // }
  #endif
  }
  
@@ -420,7 +421,7 @@ index 07831a4..8820e5d 100644
  
  #endif // LIST_H
 diff --git a/main.cpp b/main.cpp
-index 0120aa2..140bbdd 100644
+index 0120aa2..7a4e29f 100644
 --- a/main.cpp
 +++ b/main.cpp
 @@ -1,22 +1,22 @@
@@ -472,7 +473,7 @@ index 0120aa2..140bbdd 100644
  
  static array<string, LIST_LENGTH> used_keys;
  
-@@ -54,158 +54,156 @@ __thread unsigned int seed;
+@@ -54,158 +54,162 @@ __thread unsigned int seed;
  
  void generate_random_string(char *str, size_t length)
  {
@@ -563,24 +564,30 @@ index 0120aa2..140bbdd 100644
 +   long hits = 0;
 +   long miss = 0;
 +
-+   while (!terminate_req.load(relaxed)) {
-+      generate_random_string(key, sizeof(key));
 +#ifdef USE_RCU
-+      rcu_register_thread();
++   rcu_register_thread();
 +#endif
++
++   while (!terminate_req.load(relaxed)) {
++#ifdef USE_RCU
++      rcu_quiescent_state();
++#endif
++      generate_random_string(key, sizeof(key));
++
 +      if (esw_list_find(&list, key, address, sizeof(address)) == true) {
 +         hits++;
 +      } else {
 +         miss++;
 +      }
-+#ifdef USE_RCU
-+      rcu_unregister_thread();
-+#endif
 +
 +      // Update the per-thread counter safely but without an atomic
 +      // instruction (note that no other thread modifies this)
 +      stats.reads.store(stats.reads.load(relaxed) + 1, relaxed);
 +   }
++#ifdef USE_RCU
++   rcu_unregister_thread();
++#endif
++
 +   printf("Hits: %ld, Misses: %ld\n", hits, miss);
 +   return NULL;
  }

@@ -17,8 +17,8 @@
 #elif defined(USE_RCU)
 #define rd_lock(lock) rcu_read_lock()
 #define rd_unlock(lock) rcu_read_unlock()
-#define wr_lock(lock) rcu_write_lock()
-#define wr_unlock(lock) rcu_write_unlock()
+// #define wr_lock(lock) rcu_write_lock()
+// #define wr_unlock(lock) rcu_write_unlock()
 #else
 #error "No lock type defined"
 #endif
@@ -104,6 +104,7 @@ void esw_list_update(LIST_TYPE *list, const char *const key,
       if (strcmp(current->key, key) == 0) {
          struct esw_node *new_node = esw_list_create_node(key, value);
          cds_list_replace_rcu(&current->node, &new_node->node);
+         synchronize_rcu();
          esw_list_free_node(current);
          // urcu_qsbr_call_rcu(&current->node, esw_list_free_node);
          break;
@@ -178,7 +179,7 @@ void esw_list_free_node(esw_node_t *node)
 {
    free(node->key);
    free(node->value);
-   // free(node);
+   free(node);
 }
 
 void esw_list_free_content(LIST_TYPE *list)
@@ -194,13 +195,13 @@ void esw_list_free_content(LIST_TYPE *list)
       esw_list_free_node(tmp);
    }
 #elif defined(USE_RCU)
-   struct cds_list_head *curr, *tmp;
-   cds_list_for_each_safe(curr, tmp, list)
-   {
-      esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
-      cds_list_del(curr);
-      esw_list_free_node(node);
-   }
+   // struct cds_list_head *curr, *tmp;
+   // cds_list_for_each_safe(curr, tmp, list)
+   // {
+   //    esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
+   //    cds_list_del(curr);
+   //    esw_list_free_node(node);
+   // }
 #endif
 }
 

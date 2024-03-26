@@ -93,24 +93,30 @@ void *reader_thread(void *arg)
    long hits = 0;
    long miss = 0;
 
-   while (!terminate_req.load(relaxed)) {
-      generate_random_string(key, sizeof(key));
 #ifdef USE_RCU
-      rcu_register_thread();
+   rcu_register_thread();
 #endif
+
+   while (!terminate_req.load(relaxed)) {
+#ifdef USE_RCU
+      rcu_quiescent_state();
+#endif
+      generate_random_string(key, sizeof(key));
+
       if (esw_list_find(&list, key, address, sizeof(address)) == true) {
          hits++;
       } else {
          miss++;
       }
-#ifdef USE_RCU
-      rcu_unregister_thread();
-#endif
 
       // Update the per-thread counter safely but without an atomic
       // instruction (note that no other thread modifies this)
       stats.reads.store(stats.reads.load(relaxed) + 1, relaxed);
    }
+#ifdef USE_RCU
+   rcu_unregister_thread();
+#endif
+
    printf("Hits: %ld, Misses: %ld\n", hits, miss);
    return NULL;
 }
