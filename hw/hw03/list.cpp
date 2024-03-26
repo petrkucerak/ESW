@@ -98,15 +98,14 @@ void esw_list_update(LIST_TYPE *list, const char *const key,
    }
    wr_unlock(&list->lock);
 #elif defined(USE_RCU)
-   esw_node_t *new_node = esw_list_create_node(key, value);
-   struct cds_list_head *curr, *tmp;
-   cds_list_for_each_safe(curr, tmp, list)
+   struct esw_node *current, *tmp;
+   cds_list_for_each_entry_safe(current, tmp, list, node)
    {
-      esw_node_t *node = cds_list_entry(curr, esw_node_t, node);
-      if (strcmp(node->key, key) == 0) {
-         cds_list_replace_rcu(curr, &new_node->node);
-         synchronize_rcu();
-         esw_list_free_node(node);
+      if (strcmp(current->key, key) == 0) {
+         struct esw_node *new_node = esw_list_create_node(key, value);
+         cds_list_replace_rcu(&current->node, &new_node->node);
+         esw_list_free_node(current);
+         // urcu_qsbr_call_rcu(&current->rcu_head, esw_list_free_node);
          break;
       }
    }
