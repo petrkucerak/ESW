@@ -33,8 +33,8 @@ public class Main {
 
             long t1 = System.nanoTime();
             c = MatrixUtils.multiply(a, b);
-            //c = MatrixUtils.multiplyTrans(a, b);
-            //c1D = MatrixUtils.multiply1D(a1D, b1D, N, M, P);
+            // c = MatrixUtils.multiplyTrans(a, b);
+            // c1D = MatrixUtils.multiply1D(a1D, b1D, N, M, P);
             long t2 = System.nanoTime();
             System.out.println("TIME: " + (t2 - t1) / 1000000 + "ms");
         }
