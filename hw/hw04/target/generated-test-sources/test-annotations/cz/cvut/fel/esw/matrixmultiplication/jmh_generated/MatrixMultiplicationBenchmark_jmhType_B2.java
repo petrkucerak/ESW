@@ -16,4 +16,7 @@ public class MatrixMultiplicationBenchmark_jmhType_B2 extends MatrixMultiplicati
     public final static AtomicIntegerFieldUpdater<MatrixMultiplicationBenchmark_jmhType_B2> setupInvocationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(MatrixMultiplicationBenchmark_jmhType_B2.class, "setupInvocationMutex");
     public final static AtomicIntegerFieldUpdater<MatrixMultiplicationBenchmark_jmhType_B2> tearInvocationMutexUpdater = AtomicIntegerFieldUpdater.newUpdater(MatrixMultiplicationBenchmark_jmhType_B2.class, "tearInvocationMutex");
 
+    public volatile boolean readyTrial;
+    public volatile boolean readyIteration;
+    public volatile boolean readyInvocation;
 }

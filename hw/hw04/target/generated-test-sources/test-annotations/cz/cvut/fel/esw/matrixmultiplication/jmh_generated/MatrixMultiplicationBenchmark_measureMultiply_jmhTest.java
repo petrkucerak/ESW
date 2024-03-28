@@ -68,24 +68,24 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
         }
         if (threadParams.getSubgroupIndex() == 0) {
             RawResults res = new RawResults();
-            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0 = _jmh_tryInit_f_matrixmultiplicationbenchmark0_0(control);
+            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G = _jmh_tryInit_f_matrixmultiplicationbenchmark0_G(control);
 
             control.preSetup();
 
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                l_matrixmultiplicationbenchmark0_G.measureMultiply();
                 res.allOps++;
             }
 
             notifyControl.startMeasurement = true;
-            measureMultiply_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_matrixmultiplicationbenchmark0_0);
+            measureMultiply_thrpt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_matrixmultiplicationbenchmark0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                    l_matrixmultiplicationbenchmark0_G.measureMultiply();
                     res.allOps++;
                 }
             } catch (Throwable e) {
@@ -94,7 +94,9 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             control.preTearDown();
 
             if (control.isLastIteration()) {
-                f_matrixmultiplicationbenchmark0_0 = null;
+                synchronized(this.getClass()) {
+                    f_matrixmultiplicationbenchmark0_G = null;
+                }
             }
             res.allOps += res.measuredOps;
             int batchSize = iterationParams.getBatchSize();
@@ -111,12 +113,12 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void measureMultiply_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0) throws Throwable {
+    public static void measureMultiply_thrpt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
         do {
-            l_matrixmultiplicationbenchmark0_0.measureMultiply();
+            l_matrixmultiplicationbenchmark0_G.measureMultiply();
             operations++;
         } while(!control.isDone);
         result.stopTime = System.nanoTime();
@@ -135,24 +137,24 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
         }
         if (threadParams.getSubgroupIndex() == 0) {
             RawResults res = new RawResults();
-            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0 = _jmh_tryInit_f_matrixmultiplicationbenchmark0_0(control);
+            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G = _jmh_tryInit_f_matrixmultiplicationbenchmark0_G(control);
 
             control.preSetup();
 
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                l_matrixmultiplicationbenchmark0_G.measureMultiply();
                 res.allOps++;
             }
 
             notifyControl.startMeasurement = true;
-            measureMultiply_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_matrixmultiplicationbenchmark0_0);
+            measureMultiply_avgt_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, l_matrixmultiplicationbenchmark0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                    l_matrixmultiplicationbenchmark0_G.measureMultiply();
                     res.allOps++;
                 }
             } catch (Throwable e) {
@@ -161,7 +163,9 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             control.preTearDown();
 
             if (control.isLastIteration()) {
-                f_matrixmultiplicationbenchmark0_0 = null;
+                synchronized(this.getClass()) {
+                    f_matrixmultiplicationbenchmark0_G = null;
+                }
             }
             res.allOps += res.measuredOps;
             int batchSize = iterationParams.getBatchSize();
@@ -178,12 +182,12 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void measureMultiply_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0) throws Throwable {
+    public static void measureMultiply_avgt_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G) throws Throwable {
         long operations = 0;
         long realTime = 0;
         result.startTime = System.nanoTime();
         do {
-            l_matrixmultiplicationbenchmark0_0.measureMultiply();
+            l_matrixmultiplicationbenchmark0_G.measureMultiply();
             operations++;
         } while(!control.isDone);
         result.stopTime = System.nanoTime();
@@ -202,14 +206,14 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
         }
         if (threadParams.getSubgroupIndex() == 0) {
             RawResults res = new RawResults();
-            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0 = _jmh_tryInit_f_matrixmultiplicationbenchmark0_0(control);
+            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G = _jmh_tryInit_f_matrixmultiplicationbenchmark0_G(control);
 
             control.preSetup();
 
 
             control.announceWarmupReady();
             while (control.warmupShouldWait) {
-                l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                l_matrixmultiplicationbenchmark0_G.measureMultiply();
                 res.allOps++;
             }
 
@@ -218,12 +222,12 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             int batchSize = iterationParams.getBatchSize();
             int opsPerInv = benchmarkParams.getOpsPerInvocation();
             SampleBuffer buffer = new SampleBuffer();
-            measureMultiply_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_matrixmultiplicationbenchmark0_0);
+            measureMultiply_sample_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, buffer, targetSamples, opsPerInv, batchSize, l_matrixmultiplicationbenchmark0_G);
             notifyControl.stopMeasurement = true;
             control.announceWarmdownReady();
             try {
                 while (control.warmdownShouldWait) {
-                    l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                    l_matrixmultiplicationbenchmark0_G.measureMultiply();
                     res.allOps++;
                 }
             } catch (Throwable e) {
@@ -232,7 +236,9 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             control.preTearDown();
 
             if (control.isLastIteration()) {
-                f_matrixmultiplicationbenchmark0_0 = null;
+                synchronized(this.getClass()) {
+                    f_matrixmultiplicationbenchmark0_G = null;
+                }
             }
             res.allOps += res.measuredOps * batchSize;
             res.allOps *= opsPerInv;
@@ -246,7 +252,7 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void measureMultiply_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0) throws Throwable {
+    public static void measureMultiply_sample_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, SampleBuffer buffer, int targetSamples, long opsPerInv, int batchSize, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G) throws Throwable {
         long realTime = 0;
         long operations = 0;
         int rnd = (int)System.nanoTime();
@@ -261,7 +267,7 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             }
             for (int b = 0; b < batchSize; b++) {
                 if (control.volatileSpoiler) return;
-                l_matrixmultiplicationbenchmark0_0.measureMultiply();
+                l_matrixmultiplicationbenchmark0_G.measureMultiply();
             }
             if (sample) {
                 buffer.add((System.nanoTime() - time) / opsPerInv);
@@ -288,7 +294,7 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             this.blackhole = new Blackhole("Today's password is swordfish. I understand instantiating Blackholes directly is dangerous.");
         }
         if (threadParams.getSubgroupIndex() == 0) {
-            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0 = _jmh_tryInit_f_matrixmultiplicationbenchmark0_0(control);
+            MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G = _jmh_tryInit_f_matrixmultiplicationbenchmark0_G(control);
 
             control.preSetup();
 
@@ -296,11 +302,13 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             notifyControl.startMeasurement = true;
             RawResults res = new RawResults();
             int batchSize = iterationParams.getBatchSize();
-            measureMultiply_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_matrixmultiplicationbenchmark0_0);
+            measureMultiply_ss_jmhStub(control, res, benchmarkParams, iterationParams, threadParams, blackhole, notifyControl, startRndMask, batchSize, l_matrixmultiplicationbenchmark0_G);
             control.preTearDown();
 
             if (control.isLastIteration()) {
-                f_matrixmultiplicationbenchmark0_0 = null;
+                synchronized(this.getClass()) {
+                    f_matrixmultiplicationbenchmark0_G = null;
+                }
             }
             int opsPerInv = control.benchmarkParams.getOpsPerInvocation();
             long totalOps = opsPerInv;
@@ -312,26 +320,39 @@ public final class MatrixMultiplicationBenchmark_measureMultiply_jmhTest {
             throw new IllegalStateException("Harness failed to distribute threads among groups properly");
     }
 
-    public static void measureMultiply_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_0) throws Throwable {
+    public static void measureMultiply_ss_jmhStub(InfraControl control, RawResults result, BenchmarkParams benchmarkParams, IterationParams iterationParams, ThreadParams threadParams, Blackhole blackhole, Control notifyControl, int startRndMask, int batchSize, MatrixMultiplicationBenchmark_jmhType l_matrixmultiplicationbenchmark0_G) throws Throwable {
         long realTime = 0;
         result.startTime = System.nanoTime();
         for (int b = 0; b < batchSize; b++) {
             if (control.volatileSpoiler) return;
-            l_matrixmultiplicationbenchmark0_0.measureMultiply();
+            l_matrixmultiplicationbenchmark0_G.measureMultiply();
         }
         result.stopTime = System.nanoTime();
         result.realTime = realTime;
     }
 
     
-    MatrixMultiplicationBenchmark_jmhType f_matrixmultiplicationbenchmark0_0;
+    static volatile MatrixMultiplicationBenchmark_jmhType f_matrixmultiplicationbenchmark0_G;
     
-    MatrixMultiplicationBenchmark_jmhType _jmh_tryInit_f_matrixmultiplicationbenchmark0_0(InfraControl control) throws Throwable {
-        if (control.isFailing) throw new FailureAssistException();
-        MatrixMultiplicationBenchmark_jmhType val = f_matrixmultiplicationbenchmark0_0;
-        if (val == null) {
+    MatrixMultiplicationBenchmark_jmhType _jmh_tryInit_f_matrixmultiplicationbenchmark0_G(InfraControl control) throws Throwable {
+        MatrixMultiplicationBenchmark_jmhType val = f_matrixmultiplicationbenchmark0_G;
+        if (val != null) {
+            return val;
+        }
+        synchronized(this.getClass()) {
+            try {
+            if (control.isFailing) throw new FailureAssistException();
+            val = f_matrixmultiplicationbenchmark0_G;
+            if (val != null) {
+                return val;
+            }
             val = new MatrixMultiplicationBenchmark_jmhType();
-            f_matrixmultiplicationbenchmark0_0 = val;
+            val.readyTrial = true;
+            f_matrixmultiplicationbenchmark0_G = val;
+            } catch (Throwable t) {
+                control.isFailing = true;
+                throw t;
+            }
         }
         return val;
     }

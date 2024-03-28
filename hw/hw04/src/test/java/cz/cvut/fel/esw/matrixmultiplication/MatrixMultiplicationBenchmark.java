@@ -55,10 +55,10 @@ public class MatrixMultiplicationBenchmark {
         new Runner(opts.build()).run();
     }
 
-    // code copied from the Main.java file
+    // Code copied from the Main.java file
     Random rnd = ThreadLocalRandom.current();
 
-    double[][] a = MatrixUtils.generateMatrix(rnd, Main.N, Main.N, Main.MAX);
+    double[][] a = MatrixUtils.generateMatrix(rnd, Main.N, Main.M, Main.MAX);
     double[][] b = MatrixUtils.generateMatrix(rnd, Main.M, Main.P, Main.MAX);
     double[] a1D = MatrixUtils.to1D(a);
     double[] b1D = MatrixUtils.to1D(b);
