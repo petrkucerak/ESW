@@ -1,0 +1,148 @@
+[
+    {
+        "jmhVersion" : "1.34",
+        "benchmark" : "cz.cvut.fel.esw.matrixmultiplication.MatrixMultiplicationBenchmark.measureMultiply",
+        "mode" : "avgt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-21-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "21.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "21.0.2+13-Ubuntu-122.04.1",
+        "warmupIterations" : 1,
+        "warmupTime" : "1 ms",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 2,
+        "measurementTime" : "1 ms",
+        "measurementBatchSize" : 1,
+        "primaryMetric" : {
+            "score" : 357.478196,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 280.554643,
+                "50.0" : 357.478196,
+                "90.0" : 434.401749,
+                "95.0" : 434.401749,
+                "99.0" : 434.401749,
+                "99.9" : 434.401749,
+                "99.99" : 434.401749,
+                "99.999" : 434.401749,
+                "99.9999" : 434.401749,
+                "100.0" : 434.401749
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    434.401749,
+                    280.554643
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.34",
+        "benchmark" : "cz.cvut.fel.esw.matrixmultiplication.MatrixMultiplicationBenchmark.measureMultiply1D",
+        "mode" : "avgt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-21-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "21.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "21.0.2+13-Ubuntu-122.04.1",
+        "warmupIterations" : 1,
+        "warmupTime" : "1 ms",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 2,
+        "measurementTime" : "1 ms",
+        "measurementBatchSize" : 1,
+        "primaryMetric" : {
+            "score" : 314.5340415,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 292.453105,
+                "50.0" : 314.5340415,
+                "90.0" : 336.614978,
+                "95.0" : 336.614978,
+                "99.0" : 336.614978,
+                "99.9" : 336.614978,
+                "99.99" : 336.614978,
+                "99.999" : 336.614978,
+                "99.9999" : 336.614978,
+                "100.0" : 336.614978
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    336.614978,
+                    292.453105
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    },
+    {
+        "jmhVersion" : "1.34",
+        "benchmark" : "cz.cvut.fel.esw.matrixmultiplication.MatrixMultiplicationBenchmark.measureMultiplyTrans",
+        "mode" : "avgt",
+        "threads" : 1,
+        "forks" : 1,
+        "jvm" : "/usr/lib/jvm/java-21-openjdk-amd64/bin/java",
+        "jvmArgs" : [
+        ],
+        "jdkVersion" : "21.0.2",
+        "vmName" : "OpenJDK 64-Bit Server VM",
+        "vmVersion" : "21.0.2+13-Ubuntu-122.04.1",
+        "warmupIterations" : 1,
+        "warmupTime" : "1 ms",
+        "warmupBatchSize" : 1,
+        "measurementIterations" : 2,
+        "measurementTime" : "1 ms",
+        "measurementBatchSize" : 1,
+        "primaryMetric" : {
+            "score" : 165.338776,
+            "scoreError" : "NaN",
+            "scoreConfidence" : [
+                "NaN",
+                "NaN"
+            ],
+            "scorePercentiles" : {
+                "0.0" : 161.490143,
+                "50.0" : 165.338776,
+                "90.0" : 169.187409,
+                "95.0" : 169.187409,
+                "99.0" : 169.187409,
+                "99.9" : 169.187409,
+                "99.99" : 169.187409,
+                "99.999" : 169.187409,
+                "99.9999" : 169.187409,
+                "100.0" : 169.187409
+            },
+            "scoreUnit" : "ms/op",
+            "rawData" : [
+                [
+                    161.490143,
+                    169.187409
+                ]
+            ]
+        },
+        "secondaryMetrics" : {
+        }
+    }
+]
+
+
