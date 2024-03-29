@@ -35,3 +35,5 @@ def create_graph(measure_type):
     plt.show()
 
 create_graph("measureMultiply")
+create_graph("measureMultiply1D")
+create_graph("measureMultiplyTrans")

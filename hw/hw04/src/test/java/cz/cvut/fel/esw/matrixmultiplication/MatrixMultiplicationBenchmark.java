@@ -30,7 +30,7 @@ public class MatrixMultiplicationBenchmark {
                 // set to 0 for the initial run where we want to select the warm-up for each implementation
                 // if we want to set different warm-up for each implementation (and we most likely do),
                 // the annotations (@Warmup(iterations = ...)) has to be used on each benchmark method and this function cannot be used (it overrides the annotations)
-                .warmupIterations(30)
+                .warmupIterations(50)
                 // min duration of warm-up iteration
                 // 1ms because we want to work with just one invocation per iteration in this benchmark
                 .warmupTime(TimeValue.milliseconds(1))
@@ -40,7 +40,7 @@ public class MatrixMultiplicationBenchmark {
                 // 1ms because we want to work with just one invocation per iteration in this benchmark
                 .measurementTime(TimeValue.milliseconds(1))
                 //number of executions
-                .forks(10)
+                .forks(50)
                 // what we want to measure
                 .mode(Mode.AverageTime)
                 // set JVM args used for the measurements
