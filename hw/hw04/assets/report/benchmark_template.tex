@@ -50,7 +50,11 @@
 
 %Uncomment for setting up your encoding (according to *.tex encoding you use)
 %\usepackage[latin2]{inputenc} %for windows users
-%\usepackage[utf8]{inputenc} %for linux users
+\usepackage[utf8]{inputenc} %for linux users
+
+\usepackage{graphicx}
+\usepackage{hyperref}
+
 
 \newcommand{\range}[2][0]{Range: #1 to #2 page} 
 \newcommand{\conciseItem}{\itemsep1pt \parskip0pt \parsep0pt}
@@ -65,11 +69,11 @@
 % author names and affiliationsb
 % use a multiple column layout for up to three different
 % affiliations
-\author{\IEEEauthorblockN{Authors Name}
+\author{\IEEEauthorblockN{Petr Kucera}
 \IEEEauthorblockA{
-Day and time of your parallel class\\
-\textit{Study programme}\\
-\textit{E-mail address}}
+Monday 18h\\
+\textit{Open Informatics, Computer Engineering}\\
+\textit{kucerp28@fel.cvut.cz}}
 }
 
 % make the title area
@@ -78,7 +82,7 @@ Day and time of your parallel class\\
 \subsection{Warm-up}
 \begin{itemize}
 	\conciseItem
-	\item Brief description of how the warm-up period is determined.
+	\item I conducted the warm-up measurement using the methodology outlined in the assignment. Following that, I ran a benchmark test involving 30 warm-up iterations, 100 measured interactions, and 10 forks.
 \end{itemize}
 \subsection{Measurements}
 \begin{itemize}
@@ -100,7 +104,11 @@ Day and time of your parallel class\\
 \subsection{Warm-up}
 \begin{itemize}
 	\conciseItem
-	\item Results of the warm-up determination (with graphs) with a summary table.
+	\item The initial results were unsatisfactory. The error was likely due to running the program in WSL with insufficient prioritization and performance, thus being influenced by other factors. Nevertheless, I initiated the benchmarking program with 50 warm-up iterations and 50 forks, monitoring the terminal output to observe how the data changes.
+	\includegraphics[width=0.3\textwidth]{warmup_measureMultiply.png}
+	\includegraphics[width=0.3\textwidth]{warmup_measureMultiply1D.png}
+	\includegraphics[width=0.3\textwidth]{warmup_measureMultiplyTrans.png}
+	\item After analyzing the data, I discovered that the program consistently starts very quickly, and the warm-up only affects the initial launch. Subsequent errors are related to other programs running concurrently with the benchmark. The data can be reviewed in the project repository: \url{https://github.com/petrkucerak/ESW/tree/main/hw/hw04/assets}.
 \end{itemize}
 \subsection{Measurements}
 \begin{itemize}
