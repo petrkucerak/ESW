@@ -1,0 +1,123 @@
+%% KO_template.tex
+%% V2015
+%% by Jan Dvořák
+%% based on
+%% bare_conf.tex
+%% V1.3
+%% 2007/01/11
+%% by Michael Shell
+
+%%*************************************************************************
+%% Legal Notice:
+%% This code is offered as-is without any warranty either expressed or
+%% implied; without even the implied warranty of MERCHANTABILITY or
+%% FITNESS FOR A PARTICULAR PURPOSE! 
+%% User assumes all risk.
+%% In no event shall IEEE or any contributor to this code be liable for
+%% any damages or losses, including, but not limited to, incidental,
+%% consequential, or any other damages, resulting from the use or misuse
+%% of any information contained here.
+%%
+%% All comments are the opinions of their respective authors and are not
+%% necessarily endorsed by the IEEE.
+%%
+%% This work is distributed under the LaTeX Project Public License (LPPL)
+%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
+%% distributed and modified. A copy of the LPPL, version 1.3, is included
+%% in the base LaTeX documentation of all distributions of LaTeX released
+%% 2003/12/01 or later.
+%% Retain all contribution notices and credits.
+%% ** Modified files should be clearly indicated as such, including  **
+%% ** renaming them and changing author support contact information. **
+%%
+%% File list of work: IEEEtran.cls, IEEEtran_HOWTO.pdf, bare_adv.tex,
+%%                    bare_conf.tex, bare_jrnl.tex, bare_jrnl_compsoc.tex
+%%*************************************************************************
+
+
+%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%%
+%% Remove all itemize environments and replace them by your own text! 
+%%
+%%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+
+
+\documentclass[onecolumn, conference]{IEEEtran}
+
+% Uncomment for semester project in czech language
+%\usepackage[czech]{babel}
+
+%Uncomment for setting up your encoding (according to *.tex encoding you use)
+%\usepackage[latin2]{inputenc} %for windows users
+%\usepackage[utf8]{inputenc} %for linux users
+
+\newcommand{\range}[2][0]{Range: #1 to #2 page} 
+\newcommand{\conciseItem}{\itemsep1pt \parskip0pt \parsep0pt}
+
+\begin{document}
+%
+% paper title
+% can use linebreaks \\ within to get better formatting as desired
+\title{Comparison of Matrix Multiplication}
+
+
+% author names and affiliationsb
+% use a multiple column layout for up to three different
+% affiliations
+\author{\IEEEauthorblockN{Authors Name}
+\IEEEauthorblockA{
+Day and time of your parallel class\\
+\textit{Study programme}\\
+\textit{E-mail address}}
+}
+
+% make the title area
+\maketitle
+\section{Methodology}
+\subsection{Warm-up}
+\begin{itemize}
+	\conciseItem
+	\item Brief description of how the warm-up period is determined.
+\end{itemize}
+\subsection{Measurements}
+\begin{itemize}
+	\conciseItem
+	\item Brief description of how the time performance is measured.
+\end{itemize}
+\subsection{Comparison}
+\begin{itemize}
+	\conciseItem
+	\item Brief description of how the implementations are compared.
+\end{itemize}
+\section{Machine specification}
+\begin{itemize}
+	\conciseItem
+	\item CPU, memory, OS, etc.
+	\item JVM parameters if used.
+\end{itemize}
+\section{Results}
+\subsection{Warm-up}
+\begin{itemize}
+	\conciseItem
+	\item Results of the warm-up determination (with graphs) with a summary table.
+\end{itemize}
+\subsection{Measurements}
+\begin{itemize}
+	\conciseItem
+	\item Results of the time measurements including a graph with displayed confidence intervals and a table.
+\end{itemize}
+\subsection{Comparison}
+\begin{itemize}
+	\conciseItem
+	\item Results of the comparison of the implementations.
+\end{itemize}
+
+
+\section{Conclusion}
+\begin{itemize}
+	\conciseItem
+	\item Summary of the results with a discussion
+\end{itemize}
+
+\end{document}
