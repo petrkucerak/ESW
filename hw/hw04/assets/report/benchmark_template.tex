@@ -87,18 +87,18 @@ Monday 18h\\
 \subsection{Measurements}
 \begin{itemize}
 	\conciseItem
-	\item Brief description of how the time performance is measured.
+	\item For measuring time performance, I employed the methods described in the task assignment. I tested benchmarks for each function with 10 forks, 30 warm-up iterations, and 100 measuring iterations. I determined the accuracy of the given algorithm using a 95\% confidence interval.
 \end{itemize}
 \subsection{Comparison}
 \begin{itemize}
 	\conciseItem
-	\item Brief description of how the implementations are compared.
+	\item I compared all implemented algorithms among themselves again using 95\% confidence intervals of the ratios, as requested in the task assignment. The script for compute confidence intervals and ration can be reviewed in the project repository: \url{https://github.com/petrkucerak/ESW/tree/main/hw/hw04/assets}.
 \end{itemize}
 \section{Machine specification}
 \begin{itemize}
 	\conciseItem
-	\item CPU, memory, OS, etc.
-	\item JVM parameters if used.
+	\item The benchmarking runs on WSL2 on hardware equipped with 8 CPUs and 8GB of RAM.
+	\item The code runs on OpenJDK 21.0.2 without any JVM parameters.
 \end{itemize}
 \section{Results}
 \subsection{Warm-up}
@@ -113,19 +113,22 @@ Monday 18h\\
 \subsection{Measurements}
 \begin{itemize}
 	\conciseItem
-	\item Results of the time measurements including a graph with displayed confidence intervals and a table.
+	\item Results of the time measurements including a graph with displayed confidence intervals are displayed in violet color.
 \end{itemize}
 \subsection{Comparison}
 \begin{itemize}
 	\conciseItem
-	\item Results of the comparison of the implementations.
+	\item Results of the comparison are displayed in green color.
+	
+	\includegraphics[width=1\textwidth]{graph.png}
 \end{itemize}
 
 
 \section{Conclusion}
 \begin{itemize}
 	\conciseItem
-	\item Summary of the results with a discussion
+	\item In this task, I experimented with benchmarking techniques and explored the tools available for testing Java code. It was intriguing to observe the behavior of the JVM on WSL and its interaction with other processes. Additionally, the fluctuation in data quality with increasing measurement count and the distinct performance characteristics of each algorithm type were fascinating.
+	\item The fastest algorithm was matrix multiplication with transpose, while the slowest was measured on a 1D array. This trend is likely due to the computer architecture's affinity for matrix operations, as it can leverage vector instructions, parallelization, and other powerful tools for acceleration.
 \end{itemize}
 
 \end{document}
