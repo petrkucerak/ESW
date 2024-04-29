@@ -38,4 +38,7 @@ for example:
 Or use any IDE and import it as a maven project and to see how it works for JSON run `AppTest.java`.
     
 
-
+To solves problem with JAVA env
+```sh
+export JAVA_HOME=$(readlink -e $(type -p javac) | sed  -e 's/\/bin\/javac//g')
+```
