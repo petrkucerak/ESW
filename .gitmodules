@@ -1,3 +1,6 @@
 [submodule "labs/lab01/json-c"]
 	path = labs/lab01/json-c
 	url = https://github.com/json-c/json-c.git
+[submodule "hw/hw05/esw-serialization"]
+	path = hw/hw05/esw-serialization
+	url = https://github.com/misaweberova/esw-serialization.git
