@@ -54,7 +54,7 @@ public class Utils {
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < p; j++) {
                 for (int k = 0; k < m; k++) {
-                    res[i][j] += a[i][k] * bt[j][k];
+                    res[i][j] = dot(a[i], bt[j]);
                 }
             }
         }
